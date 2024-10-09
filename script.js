@@ -9,6 +9,7 @@ const upgrade1BoughtDisplay = document.getElementById('upgrade1-bought');
 const upgrade2BoughtDisplay = document.getElementById('upgrade2-bought');
 const messageDisplay = document.getElementById('message');
 const heart = document.getElementById('heart');
+const slash = document.getElementById('slash');
 const mob = document.querySelector('.mob');
 // wtf 2 floor?
 const floorElement = document.getElementById('floor');
@@ -41,7 +42,7 @@ const tokenDisplay = document.getElementById('token')
 const token1BoughtDisplay = document.getElementById('token1-bought');
 const token2BoughtDisplay = document.getElementById('token2-bought');
 const token3BoughtDisplay = document.getElementById('token3-bought');
-// token multiplier
+// tokenclick multiplier
 const tokenclickdisplay = document.getElementById('tokenclick')
 let tokenclick = 1
 const tokenautoclickdisplay = document.getElementById('tokenautoclick')
@@ -73,6 +74,7 @@ button.addEventListener('click', () => {
   pointsDisplay.textContent = points;
   totalpointsDisplay.textContent = totalpoints;
   showHeart();
+  showslash();
 });
 
 // upgrade du click et upgrade du click par second
@@ -123,7 +125,8 @@ function showMessage(message) {
   }, 2000);
 }
 
-// les coeurs qui apparraisent
+
+// les slash qui apparraisent 
 button.addEventListener('click', () => {
   const mobRect = mob.getBoundingClientRect();
 
@@ -133,31 +136,23 @@ button.addEventListener('click', () => {
   const mobLeft = mobRect.left;
 
   const randomX = Math.random() * mobWidth + mobLeft - window.scrollX;
-  const randomY = Math.random() * mobHeight + mobTop - window.scrollY + (mobHeight / 2);
 
-  heart.style.left = `${randomX}px`;
-  heart.style.top = `${randomY}px`;
-  heart.style.display = 'block';
+  // Adjust the Y position to be higher
+  const offsetY = 50; // Adjust this value to raise or lower the slash position
+  const randomY = Math.random() * mobHeight + mobTop - window.scrollY - offsetY;
 
+  // Position the slash effect
+  slash.style.left = `${randomX}px`;
+  slash.style.top = `${randomY}px`;
+  slash.style.display = 'block'; // Show the slash
+
+  // Hide the slash after a short duration
   setTimeout(() => {
-    heart.style.display = 'none';
-  }, 1000);
-})
-  button.addEventListener('click', () => {
-  const mobRect = mob.getBoundingClientRect();
+    slash.style.display = 'none'; // Hide the slash
+  }, 300); // Adjust this duration as needed
 
-  const mobWidth = mobRect.width;
-  const mobHeight = mobRect.height;
-  const mobTop = mobRect.top;
-  const mobLeft = mobRect.left;
 
-  const randomX = Math.random() * mobWidth + mobLeft - window.scrollX;
-  const randomY = Math.random() * mobHeight + mobTop - window.scrollY + (mobHeight / 2);
-
-  heart.style.left = `${randomX}px`;
-  heart.style.top = `${randomY}px`;
-  heart.style.display = 'block';
-
+  
   // +2 point 1er palier
   if (totalpoints >= 100 && !floor2) {
     clickMultiplier += 2;
@@ -170,12 +165,8 @@ button.addEventListener('click', () => {
   // affiche les points gagné
   updatePoints();
   updatetotalpoints();
- 
-  // bizarre c utile aussi sa meme si sa apparait 2 fois
-  setTimeout(() => {
-    heart.style.display = 'none';
-  }, 1000);
-});
+}); //obligé de fermé l'accolade ici va savoir pourquoi sinon le shop ouvre pas le code marche c'est tout ce qui compte
+
 
 // affiche les points gagné
 function updatePoints() {
@@ -183,7 +174,7 @@ function updatePoints() {
   pointsElement.textContent = points.tofixed(1);
 }
 
-// le timer button + change de coleur
+// le timer button + change de couleur
 
 document.addEventListener('DOMContentLoaded', () => {
   const startTimerButton = document.querySelector('.start-timer-button');
@@ -235,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-//shop
+//token shop
 const shopButton = document.querySelector('.shop-button');
 const shop = document.querySelector('.shop');
 
