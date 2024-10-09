@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clicker Game</title>
+  <style>
+body {
+      background-image: url("https://2.bp.blogspot.com/-1hJrmppWEyw/WB5K_g2Fd1I/AAAAAAAABW8/qJwv1Z2mDoYHRQwYiTezvB4Hx-UH62d2wCLcB/s1600/windows-xp-nature-full-hd-wallpaper-1920-1200.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: rgba(0,0, 0, 0.5);
+    }
+
+.timer {
+      font-size: 20px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    .cancel-button {
+      position: absolute;
+      top: 50px;
+      right: 10px;
+      cursor: pointer;
+      display: none;
+      padding: 5px 10px;
+    }
+
+h1 {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 10px;
+      background-color: #f2f2f2;
+      text-align: center;
+      margin: 0;
+    }
+
+  .container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100vh;
+}
+
+.heart {
+  margin-top: -100px;
+  height: 200px;
+  font-size: 36px;
+  color: red;
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0%;
+  transform: translate(-50%, -50%);
+}
+
+.mob {
+  margin-top: 0px;
+  height: 200px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+}
+    .button {
+      margin-top: 100px;
+      padding: 20px;
+      font-size: 24px;
+      background-color: #FFC300;
+      cursor: pointer;
+    }
+    .score {
+      font-size: 36px;
+      margin-top: 20px;
+    }
+   .totalscore {
+  font-size: 16px;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+}
+    .upgrade {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+    .message {
+      font-size: 14px;
+      color: red;
+      margin-top: 10px;
+    }
+   .heart {
+  font-size: 36px;
+  color: red;
+  position: absolute;
+  display: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.shop {
+  display: none;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: red;
+  padding: 20px;
+  color: white;
+}
+
+.shop-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+.token-boost{
+  font-size: 46 px;
+  position: fixed;
+  top: 50px;
+  left: 10px;
+}
+.token-boost2{
+  font-size: 46 px;
+  position: fixed;
+  top: 75px;
+  left: -27px;
+}
+
+.slash {
+            position: absolute;
+            width: 100px; /* Adjust as needed */
+            height: 100px; /* Adjust as needed */
+            background-image: url('https://th.bing.com/th/id/R.332e6c38441cfc47258fecf8c06696e1?rik=DRuBmobvn7YyRA&pid=ImgRaw&r=0'); /* Replace with your slash image */
+            background-size: cover;
+            display: none;
+            pointer-events: none; /* Prevents interference with monster click */
+        }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/hostedimages/1571045602i/28290826._SY540_.jpg" alt="mob" class="mob">
+    <h1 id="floor">Floor 1</h1>
+    <button class="button">Click Me!</button>
+     <button class="start-timer-button">WITH THIS TREASURE<br> I SUMMON!!! </button>
+  <div class="timer">Time left:</div>
+  <button class="cancel-button">Leave</button>
+    <div class="totalscore">total Points: <span id="totalpoints">0</span></div> 
+    <div class="score">Points: <span id="points">0</span></div>
+    <div class="score">Points per click: <span id="click-points">1</span></div>
+    <div class="score">Points per second: <span id="auto-points">0</span></div>
+    <div class="upgrade">
+      Upgrade 1: <button class="upgrade-btn" id="upgrade1">Boost Click</button> - Cost: <span id="upgrade1-cost">10</span> - Bought: <span id="upgrade1-bought">0</span>
+      Upgrade 2: <button class="upgrade-btn" id="upgrade2">Auto Points</button> - Cost: <span id="upgrade2-cost">100</span> - Bought: <span id="upgrade2-bought">0</span>
+    </div>
+    <div class="message" id="message"></div>
+    <div class="heart" id="heart">&hearts;</div>
+    <div class="slash" id="slash"></div>
+    
+    <button class="shop-button">Open Shop</button>
+    
+    <div class="shop">
+      <h2>Permanent Shop</h2>
+      <div class="score">token: <span id="token">0</span></div>
+      <ul>
+        <li><button class="upgrade-btn" id="permanentUpgrade1">5 token: reduce auto point interval by 0.01 second</button> - Bought: <span id="token1-bought">0</span> </li>
+        <li><button class="upgrade-btn" id="permanentUpgrade2">20 token: boost the cps by 25% </button> - Bought: <span id="token2-bought">0</span> </li>
+        <li><button class="upgrade-btn" id="permanentUpgrade3">30 token: multiply your auto point by 1.1</button> - Bought: <span id="token3-bought">0</span> </li>
+      </ul>
+    </div>
+      <div class="token-boost"> 
+        <h2 style= "color:gold;">Token boost:</h2>
+      </div>
+      <div class="token-boost2">  
+      <ol style="list-style:none; font-size: 20px;">
+        <li>Auto-points interval: - <span id="tokenboost1">0</span><span>s</span></li>
+        <li>Point per click: x <span id="tokenboost2">0</span><span>%</span></li>
+        <li>Auto point per second: x  <span id="tokenboost3">0</span><span>%</span></li></li>
+    </ol>
+   </div>
+  <script src="script.js"></script>
+
+ 
+
+  
+</body>
+</html>
