@@ -67,10 +67,10 @@ function updatetotalpoints() {
   totalpointsDisplay.textContent = totalpoints;
 }
 
-// click + bonus du click
+// click + bonus du click + token bonus
 button.addEventListener('click', () => {
-  points += clickMultiplier;
-  totalpoints += clickMultiplier;
+  points += clickMultiplier*tokenclick;
+  totalpoints += clickMultiplier*tokenclick;
   pointsDisplay.textContent = points;
   totalpointsDisplay.textContent = totalpoints;
   showHeart();
@@ -114,7 +114,9 @@ upgradeButtons.forEach((upgradeButton) => {
 // je crois l'interval du autopoint
 setInterval(() => {
   points += autoPointsPerSecond;
+  totalpoints += autoPointsPerSecond;
   pointsDisplay.textContent = points;
+  totalpointsDisplay.textContent = totalpoints;
 }, interval);
 
 // je crois les message d'erreurs
@@ -289,7 +291,9 @@ upgradeButtons.forEach((upgradeButton) => {
       } else {
         showMessage("Not enough token to purchase this");
       }
-    }
+    }pointsDisplay.textContent = points;
+    clickPointsDisplay.textContent = clickMultiplier*tokenclick;
+    autoPointsDisplay.textContent = autoPointsPerSecond*tokenautoclick;
   });
 });
 
